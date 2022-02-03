@@ -1,22 +1,40 @@
 library(gtrendsR)
 library(tidyverse)
 
-trend1 <- input_read <- readline() #Take user input for trends
-trend2 <- input_read <- readline() #Take user input for trends
 
+res <- gtrends(c("Apple", "Microsoft"))
 
-Rres <- gtrends(c(trend1, trend2))
+iot <- res$interest_over_time
 
-InterestOverTime <- res$interest_over_time
+iot2020 <- iot %>% 
+  filter(date > as.Date("2020-01-01"))
 
-InterestOverTime2021 <- iot %>% 
-  filter(date > as.Date("2021-01-01"))
-
-InterestOverTime2021 %>% 
+iot2020 %>% 
   ggplot() + geom_line(aes(x = date,
                            y = hits,
                            color = keyword)) +
   theme_minimal() +
-  labs(title = "Google Trend Comparison in 2021",
-       subtitle = "Google Search Analysis")
+  labs(title = "Apple vs Microsoft - in 2020",
+       subtitle = "Google Trends Report",
+       caption = "Courtesy: gtrendsR package")
+library(gtrendsR)
+library(dplyr)
+library(ggplot2)
 
+
+res <- gtrends(c("zoom", "slack"))
+
+iot <- res$interest_over_time
+
+iot2020 <- iot %>% 
+  filter(date > as.Date("2020-01-01"))
+## Warning in mask$eval_all_filter(dots, env_filter): Incompatible methods
+## ("Ops.POSIXt", "Ops.Date") for ">"
+iot2020 %>% 
+  ggplot() + geom_line(aes(x = date,
+                           y = hits,
+                           color = keyword)) +
+  theme_minimal() +
+  labs(title = "Zoom vs Slack - in 2020",
+       subtitle = "Google Trends Report",
+       caption = "Courtesy: gtrendsR package")
